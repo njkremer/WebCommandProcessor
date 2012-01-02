@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 
+import com.kremerk.CommandProcessor.Response.JsonResponse;
+import com.kremerk.CommandProcessor.Response.Response;
+import com.kremerk.CommandProcessor.Response.ResponseType;
+
 public class CommandServlet extends HttpServlet {
 	private static final long serialVersionUID = 8946402369349157361L;
 
@@ -31,10 +35,10 @@ public class CommandServlet extends HttpServlet {
 		String[] contextPath = request.getContextPath().split("/");
 		String commandSetName = contextPath[0];
 		String commandName = contextPath[1];
+		ResponseType rspType = ResponseType.getResponseTypeFromString(request.getParameter("type"));
 		String[] parameters = request.getParameterValues("param");
 
-		JsonResponse jsonResponse = null;
-		JSONArray data = null;
+		Response rsp = null;
 
 		try {
 			if (mockMode) {
@@ -42,14 +46,18 @@ public class CommandServlet extends HttpServlet {
 			} else {
 				cmdProcessor = new CommandProcessorImpl();
 			}
-			data = cmdProcessor.processCommand(commandSetName, commandName, parameters);
-			jsonResponse = new JsonResponse(data);
+			if(rspType == ResponseType.JSON) {
+				rsp = new JsonResponse((JSONArray) cmdProcessor.processCommand(commandSetName, commandName, parameters));
+			}
+			if(rspType == ResponseType.BINARY) {
+//				rsp = new BinaryResponse((byte[]) cmdProcessor.processCommand(commandSetName, commandName, parameters));
+			}
 		} catch (CommandProcessorException e) {
-			jsonResponse = new JsonResponse(1, e.getMessage(), null);
+			rsp = new JsonResponse(1, e.getMessage(), null);
 		}
-		String retValue = jsonResponse.toString();
+		String retValue = rsp.getResponse();
 
-		response.setContentType("text/javascript");
+		response.setContentType(rsp.getResponseType());
 		response.getWriter().write(retValue);
 
 	}

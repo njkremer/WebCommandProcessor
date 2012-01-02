@@ -12,7 +12,7 @@ public class CommandProcessorImpl implements CommandProcessor {
 		commands.put(commandSet.getClass().getSimpleName(), commandSet);
 	}
 	
-	public JSONArray processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
+	public Object processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
 		CommandSet commandSet = commands.get(commandSetName);
 		try {
 			Method command = commandSet.getClass().getDeclaredMethod(commandName, String[].class);

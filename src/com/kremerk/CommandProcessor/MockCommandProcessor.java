@@ -13,9 +13,10 @@ public class MockCommandProcessor implements CommandProcessor {
 		mockCommandDir = commandDir;
 	}
 	@Override
-	public JSONArray processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
+	public Object processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(mockCommandDir);
+		sb.append(File.separator);
 		sb.append(commandSetName);
 		sb.append(File.separator);
 		sb.append(commandName);

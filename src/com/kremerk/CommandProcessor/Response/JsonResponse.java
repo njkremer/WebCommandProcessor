@@ -1,10 +1,10 @@
-package com.kremerk.CommandProcessor;
+package com.kremerk.CommandProcessor.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class JsonResponse extends JSONObject {
-	public JsonResponse(JSONArray data) throws CommandProcessorException {
+public class JsonResponse implements Response {
+	public JsonResponse(JSONArray data) {
 		this.data = data;
 	}
 	
@@ -16,6 +16,10 @@ public class JsonResponse extends JSONObject {
 	
 	public String getResponse() {
 		return String.format(template, status, message, data.toString());
+	}
+	
+	public String getResponseType() {
+		return "text/javascript";
 	}
 	
 	private JSONArray data;
