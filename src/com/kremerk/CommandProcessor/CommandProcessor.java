@@ -1,4 +1,6 @@
-package com.kremerk.CommandProcessor;
+package com.kremerk.commandprocessor;
+
+import com.kremerk.commandprocessor.exception.CommandProcessorException;
 
 
 public interface CommandProcessor {

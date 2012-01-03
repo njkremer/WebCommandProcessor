@@ -1,7 +1,6 @@
-package com.kremerk.CommandProcessor.Response;
+package com.kremerk.commandprocessor.response;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class JsonResponse implements Response {
 	public JsonResponse(JSONArray data) {

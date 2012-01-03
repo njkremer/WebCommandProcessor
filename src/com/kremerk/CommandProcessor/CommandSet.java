@@ -1,4 +1,4 @@
-package com.kremerk.CommandProcessor;
+package com.kremerk.commandprocessor;
 
 /**
  * <p>A command set is a set of commands that will be run on a server.

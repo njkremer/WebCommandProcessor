@@ -1,11 +1,11 @@
-package com.kremerk.CommandProcessor;
+package com.kremerk.commandprocessor.response;
 
 import static org.junit.Assert.assertEquals;
 
 import org.json.JSONArray;
 import org.junit.Test;
 
-import com.kremerk.CommandProcessor.Response.JsonResponse;
+import com.kremerk.commandprocessor.response.JsonResponse;
 
 public class TU_JsonResponse {
 	@Test

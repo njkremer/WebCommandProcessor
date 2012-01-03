@@ -1,4 +1,4 @@
-package com.kremerk.CommandProcessor.Response;
+package com.kremerk.commandprocessor.response;
 
 public interface Response {
 	public String getResponse();

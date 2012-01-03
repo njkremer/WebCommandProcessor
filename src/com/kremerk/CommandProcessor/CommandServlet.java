@@ -1,4 +1,4 @@
-package com.kremerk.CommandProcessor;
+package com.kremerk.commandprocessor;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 
-import com.kremerk.CommandProcessor.Response.JsonResponse;
-import com.kremerk.CommandProcessor.Response.Response;
-import com.kremerk.CommandProcessor.Response.ResponseType;
+import com.kremerk.commandprocessor.exception.CommandProcessorException;
+import com.kremerk.commandprocessor.response.JsonResponse;
+import com.kremerk.commandprocessor.response.Response;
+import com.kremerk.commandprocessor.response.ResponseType;
 
 public class CommandServlet extends HttpServlet {
 	private static final long serialVersionUID = 8946402369349157361L;
