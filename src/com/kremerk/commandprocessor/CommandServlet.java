@@ -33,9 +33,9 @@ public class CommandServlet extends HttpServlet {
 	 * handle the params passed in in the given order.
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] contextPath = request.getContextPath().split("/");
-		String commandSetName = contextPath[0];
-		String commandName = contextPath[1];
+		String[] commandParts = parseCommandParts(request);
+		String commandSetName = commandParts[0];
+		String commandName = commandParts[1];
 		ResponseType rspType = ResponseType.getResponseTypeFromString(request.getParameter("type"));
 		String[] parameters = request.getParameterValues("param");
 
@@ -81,6 +81,17 @@ public class CommandServlet extends HttpServlet {
 	
 	public void setMockRoot(String commandRoot) {
 		setMockRoot(System.getProperty("user.dir"), commandRoot);
+	}
+	
+	public String[] parseCommandParts(HttpServletRequest request) {
+		System.out.println("getRequestURI " + request.getRequestURI());
+		System.out.println("getContextPath " + request.getContextPath());
+		System.out.println("getServletPath " + request.getServletPath());
+		String uri = request.getRequestURI();
+		uri = uri.replace(request.getContextPath(), "");
+		uri = uri.replace(request.getServletPath(), "");
+		uri = uri.replaceFirst("/", "");
+		return uri.split("/");
 	}
 	
 	private boolean mockMode = false;
