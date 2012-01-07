@@ -39,7 +39,8 @@ public class CommandServlet extends HttpServlet {
 		String[] commandParts = parseCommandParts(request);
 		String commandSetName = commandParts[0];
 		String commandName = commandParts[1];
-		ResponseType rspType = ResponseType.getResponseTypeFromString(request.getParameter("type"));
+		String type = request.getParameter("type");
+		ResponseType rspType = ResponseType.getResponseTypeFromString(type);
 		String[] parameters = request.getParameterValues("param");
 
 		Response rsp = null;
@@ -65,7 +66,7 @@ public class CommandServlet extends HttpServlet {
 				out.close();
 			}
 			else if(rspType == ResponseType.UNSUPPORTED){
-			    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, String.format("Error executing command with type %s. Type %s is not supported.",rspType.getType(), rspType.getType()));
+			    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, String.format("Error executing command with type %s. Type %s is not supported.",type, type));
 			}
 			else {
 			    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Type must be supplied when calling a command");
