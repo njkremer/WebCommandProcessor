@@ -53,10 +53,12 @@ public class CommandServlet extends HttpServlet {
 				
 				response.setContentType(rsp.getContentType());
 				response.getWriter().write((String) rsp.getResponse());
+				response.setStatus(HttpServletResponse.SC_OK);
 			}
 			else if(rspType == ResponseType.BINARY) {
 				rsp = new BinaryResponse(cmdProcessor.processBinaryCommand(commandSetName, commandName, parameters));
 				response.setContentType(rsp.getContentType());
+				response.setStatus(HttpServletResponse.SC_OK);
 				ServletOutputStream out = response.getOutputStream();
 				out.write((byte[]) rsp.getResponse());
 				out.flush();
