@@ -15,8 +15,9 @@ package com.kremerk.commandprocessor;
  * which will determent what it will cast the value from the CommandSet to.
  * 
  * <p>For a type of "json" or ResponseType.JSON, it will cast the result to a JSONArray
+ * <p>For a type of "binary" or ResponseType.BINARY, it will cast the result to a byte[]
  * 
- * <p>Future response types could be supported, such as XML or Binary.
+ * <p>Future response types could be supported, such as XML.
  *  
  * @author Nick
  *

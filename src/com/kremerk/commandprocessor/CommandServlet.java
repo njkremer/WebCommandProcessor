@@ -4,19 +4,22 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-
 import com.kremerk.commandprocessor.exception.CommandProcessorException;
+import com.kremerk.commandprocessor.response.BinaryResponse;
 import com.kremerk.commandprocessor.response.JsonResponse;
 import com.kremerk.commandprocessor.response.Response;
 import com.kremerk.commandprocessor.response.ResponseType;
 
 public class CommandServlet extends HttpServlet {
-	private static final long serialVersionUID = 8946402369349157361L;
+	
+	public CommandServlet(CommandProcessor processor) {
+		this.cmdProcessor = processor;
+	}
 
 	/**
 	 * The CRUDServlet expects to take a command and a series of parameters.
@@ -44,22 +47,32 @@ public class CommandServlet extends HttpServlet {
 		try {
 			if (mockMode) {
 				cmdProcessor = new MockCommandProcessor(mockCommandRoot);
-			} else {
-				cmdProcessor = new CommandProcessorImpl();
-			}
+			} 
 			if(rspType == ResponseType.JSON) {
-				rsp = new JsonResponse((JSONArray) cmdProcessor.processCommand(commandSetName, commandName, parameters));
+				rsp = new JsonResponse(cmdProcessor.processCommand(commandSetName, commandName, parameters));
+				
+				response.setContentType(rsp.getContentType());
+				response.getWriter().write((String) rsp.getResponse());
 			}
-			if(rspType == ResponseType.BINARY) {
-//				rsp = new BinaryResponse((byte[]) cmdProcessor.processCommand(commandSetName, commandName, parameters));
+			else if(rspType == ResponseType.BINARY) {
+				rsp = new BinaryResponse(cmdProcessor.processBinaryCommand(commandSetName, commandName, parameters));
+				response.setContentType(rsp.getContentType());
+				ServletOutputStream out = response.getOutputStream();
+				out.write((byte[]) rsp.getResponse());
+				out.flush();
+				out.close();
+			}
+			else if(rspType == ResponseType.UNSUPPORTED){
+			    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, String.format("Error executing command with type %s. Type %s is not supported.",rspType.getType(), rspType.getType()));
+			}
+			else {
+			    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Type must be supplied when calling a command");
 			}
 		} catch (CommandProcessorException e) {
-			rsp = new JsonResponse(1, e.getMessage(), null);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error executing command " + commandName);
+			return;
 		}
-		String retValue = rsp.getResponse();
 
-		response.setContentType(rsp.getResponseType());
-		response.getWriter().write(retValue);
 
 	}
 
@@ -84,17 +97,13 @@ public class CommandServlet extends HttpServlet {
 	}
 	
 	public String[] parseCommandParts(HttpServletRequest request) {
-		System.out.println("getRequestURI " + request.getRequestURI());
-		System.out.println("getContextPath " + request.getContextPath());
-		System.out.println("getServletPath " + request.getServletPath());
-		String uri = request.getRequestURI();
-		uri = uri.replace(request.getContextPath(), "");
-		uri = uri.replace(request.getServletPath(), "");
-		uri = uri.replaceFirst("/", "");
-		return uri.split("/");
+		String path = request.getPathInfo();
+		path = path.replaceFirst("/", "");
+		return path.split("/");
 	}
 	
 	private boolean mockMode = false;
 	private String mockCommandRoot;
 	private CommandProcessor cmdProcessor;
+	private static final long serialVersionUID = 8946402369349157361L;
 }

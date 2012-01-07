@@ -19,7 +19,9 @@ public class Main {
 
 		Context root = new Context(server,"/Test",Context.SESSIONS);
 		
-		root.addServlet(new ServletHolder(new CommandServlet()), "/cmd/*");
+		root.addServlet(new ServletHolder(new CommandServlet(null)), "/cmd/*");
+		
+			
 		try {
 			server.start();
 		} catch (Exception e) {
@@ -27,5 +29,6 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

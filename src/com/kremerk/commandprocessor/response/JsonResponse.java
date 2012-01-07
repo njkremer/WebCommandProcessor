@@ -17,7 +17,7 @@ public class JsonResponse implements Response {
 		return String.format(template, status, message, data.toString());
 	}
 	
-	public String getResponseType() {
+	public String getContentType() {
 		return "text/javascript";
 	}
 	

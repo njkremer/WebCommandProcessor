@@ -9,24 +9,32 @@ import com.kremerk.commandprocessor.exception.CommandProcessorException;
 
 public class CommandProcessorImpl implements CommandProcessor {
 
-	
-	public void addCommandSet(CommandSet commandSet) {
-		commands.put(commandSet.getClass().getSimpleName(), commandSet);
-	}
-	
-	public Object processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
-		CommandSet commandSet = commands.get(commandSetName);
-		try {
-			Method command = commandSet.getClass().getDeclaredMethod(commandName, String[].class);
-			Object[] o = new Object[1];
-			o[0] = parameters;
-			JSONArray response = (JSONArray) command.invoke(commandSet, o);
-			return response;
-		} catch (Exception e) {
-			throw new CommandProcessorException("There was an error getting the command to run.", e);
-		}
-	}
-	
-	private HashMap<String, CommandSet> commands = new HashMap<String, CommandSet>();
-	
+    public void addCommandSet(CommandSet commandSet) {
+        commands.put(commandSet.getClass().getSimpleName(), commandSet);
+    }
+
+    public JSONArray processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
+            return (JSONArray) _processCommand(commandSetName, commandName, parameters);
+    }
+
+    @Override
+    public byte[] processBinaryCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
+        return (byte[]) _processCommand(commandSetName, commandName, parameters);
+    }
+
+    private Object _processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
+        try {
+            CommandSet commandSet = commands.get(commandSetName);
+            Method command = commandSet.getClass().getDeclaredMethod(commandName, String[].class);
+            Object[] o = new Object[1];
+            o[0] = parameters;
+            return command.invoke(commandSet, o);
+        }
+        catch (Exception e) {
+            throw new CommandProcessorException("There was an error getting the command to run.", e);
+        }
+    }
+
+    private HashMap<String, CommandSet> commands = new HashMap<String, CommandSet>();
+
 }

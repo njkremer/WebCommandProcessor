@@ -15,7 +15,7 @@ public class MockCommandProcessor implements CommandProcessor {
 		mockCommandDir = commandDir;
 	}
 	@Override
-	public Object processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
+	public JSONArray processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(mockCommandDir);
 		sb.append(File.separator);
@@ -45,6 +45,12 @@ public class MockCommandProcessor implements CommandProcessor {
 		}
 	}
 	
-	private String mockCommandDir;
+
+    @Override
+    public byte[] processBinaryCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
+        throw new UnsupportedOperationException();
+    }
+    
+    private String mockCommandDir;
 
 }
