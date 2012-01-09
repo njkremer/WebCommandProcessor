@@ -25,7 +25,13 @@ public class CommandProcessorImpl implements CommandProcessor {
     private Object _processCommand(String commandSetName, String commandName, String... parameters) throws CommandProcessorException {
         try {
             CommandSet commandSet = commands.get(commandSetName);
+            if(commandSet == null) {
+            	throw new CommandProcessorException("Command set " + commandSetName + " is null, did you add it to the command processor?");
+            }
             Method command = commandSet.getClass().getDeclaredMethod(commandName, String[].class);
+            if(command == null) {
+            	throw new CommandProcessorException("Command " + commandName + " could not be found in the command set " + commandSetName + ", is it defined correctly?");
+            }
             Object[] o = new Object[1];
             o[0] = parameters;
             return command.invoke(commandSet, o);

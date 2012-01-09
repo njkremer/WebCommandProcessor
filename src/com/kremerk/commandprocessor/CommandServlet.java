@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 import com.kremerk.commandprocessor.exception.CommandProcessorException;
 import com.kremerk.commandprocessor.response.BinaryResponse;
 import com.kremerk.commandprocessor.response.JsonResponse;
@@ -72,7 +74,7 @@ public class CommandServlet extends HttpServlet {
 			    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Type must be supplied when calling a command");
 			}
 		} catch (CommandProcessorException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error executing command " + commandName);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error executing command " + commandName + "\n\n" + ExceptionUtils.getStackTrace(e));
 			return;
 		}
 
