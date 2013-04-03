@@ -1,4 +1,4 @@
-package com.kremerk.commandprocessor.exception;
+package com.njkremer.commandprocessor.exception;
 
 public class CommandProcessorException extends Exception {
 	private static final long serialVersionUID = 3593905317475772937L;

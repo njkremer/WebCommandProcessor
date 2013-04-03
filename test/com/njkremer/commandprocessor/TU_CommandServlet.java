@@ -1,4 +1,4 @@
-package com.kremerk.commandprocessor;
+package com.njkremer.commandprocessor;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -19,6 +19,10 @@ import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+
+import com.njkremer.commandprocessor.CommandProcessorImpl;
+import com.njkremer.commandprocessor.CommandServlet;
+import com.njkremer.commandprocessor.CommandSet;
 
 public class TU_CommandServlet {
 

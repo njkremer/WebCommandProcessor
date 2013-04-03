@@ -1,4 +1,4 @@
-package com.kremerk.commandprocessor;
+package com.njkremer.commandprocessor;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.kremerk.commandprocessor.exception.CommandProcessorException;
+import com.njkremer.commandprocessor.exception.CommandProcessorException;
 
 public class MockCommandProcessor implements CommandProcessor {
 

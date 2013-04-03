@@ -1,8 +1,8 @@
-package com.kremerk.commandprocessor;
+package com.njkremer.commandprocessor;
 
 import org.json.JSONArray;
 
-import com.kremerk.commandprocessor.exception.CommandProcessorException;
+import com.njkremer.commandprocessor.exception.CommandProcessorException;
 
 
 public interface CommandProcessor {

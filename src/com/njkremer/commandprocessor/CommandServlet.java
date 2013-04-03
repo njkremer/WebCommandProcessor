@@ -1,4 +1,4 @@
-package com.kremerk.commandprocessor;
+package com.njkremer.commandprocessor;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import com.kremerk.commandprocessor.exception.CommandProcessorException;
-import com.kremerk.commandprocessor.response.BinaryResponse;
-import com.kremerk.commandprocessor.response.JsonResponse;
-import com.kremerk.commandprocessor.response.Response;
-import com.kremerk.commandprocessor.response.ResponseType;
+import com.njkremer.commandprocessor.exception.CommandProcessorException;
+import com.njkremer.commandprocessor.response.BinaryResponse;
+import com.njkremer.commandprocessor.response.JsonResponse;
+import com.njkremer.commandprocessor.response.Response;
+import com.njkremer.commandprocessor.response.ResponseType;
 
 public class CommandServlet extends HttpServlet {
 

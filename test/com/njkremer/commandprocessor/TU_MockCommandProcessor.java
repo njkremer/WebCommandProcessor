@@ -1,12 +1,12 @@
-package com.kremerk.commandprocessor;
+package com.njkremer.commandprocessor;
 
 import static org.junit.Assert.assertEquals;
 
 import org.json.JSONArray;
 import org.junit.Test;
 
-import com.kremerk.commandprocessor.MockCommandProcessor;
-import com.kremerk.commandprocessor.exception.CommandProcessorException;
+import com.njkremer.commandprocessor.MockCommandProcessor;
+import com.njkremer.commandprocessor.exception.CommandProcessorException;
 
 public class TU_MockCommandProcessor {
 	@Test

@@ -1,11 +1,11 @@
-package com.kremerk.commandprocessor;
+package com.njkremer.commandprocessor;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.json.JSONArray;
 
-import com.kremerk.commandprocessor.exception.CommandProcessorException;
+import com.njkremer.commandprocessor.exception.CommandProcessorException;
 
 public class CommandProcessorImpl implements CommandProcessor {
 
